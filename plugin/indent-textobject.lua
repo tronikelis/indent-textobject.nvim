@@ -1,0 +1,36 @@
+vim.keymap.set("v", "ii", function()
+	require("indent-textobject.main").select_indent(0)
+end)
+
+vim.keymap.set("v", "ai", function()
+	require("indent-textobject.main").select_indent(-1)
+end)
+
+vim.keymap.set("o", "ii", "<cmd>normal vii<cr>")
+vim.keymap.set("o", "ai", "<cmd>normal vai<cr>")
+
+vim.keymap.set("n", "[i", function()
+	vim.cmd("normal! v")
+	require("indent-textobject.main").select_indent(0)
+	vim.cmd("normal! o")
+	vim.cmd("normal! v")
+end)
+
+vim.keymap.set("n", "]i", function()
+	vim.cmd("normal! v")
+	require("indent-textobject.main").select_indent(0)
+	vim.cmd("normal! v")
+end)
+
+vim.keymap.set("n", "[I", function()
+	vim.cmd("normal! v")
+	require("indent-textobject.main").select_indent(-1)
+	vim.cmd("normal! o")
+	vim.cmd("normal! v")
+end)
+
+vim.keymap.set("n", "]I", function()
+	vim.cmd("normal! v")
+	require("indent-textobject.main").select_indent(-1)
+	vim.cmd("normal! v")
+end)
