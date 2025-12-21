@@ -48,26 +48,40 @@ local function move_cursor_to_first_indent()
 end
 
 ---@param offset integer
-function M.select_indent(offset)
-	move_cursor_to_first_indent()
-
+---@return string
+function M.indent_cmd_top(offset)
 	local top = find_indent(1, -1)
-	local bot = find_indent(vim.api.nvim_buf_line_count(0), 1)
 	if not top then
 		top = "normal! gg"
 	else
 		top = top + offset
 	end
+	return tostring(top)
+end
+
+---@param offset integer
+---@return string
+function M.indent_cmd_bot(offset)
+	local bot = find_indent(vim.api.nvim_buf_line_count(0), 1)
 	if not bot then
 		bot = "normal! G"
 	else
 		bot = bot - offset
 	end
+	return tostring(bot)
+end
 
-	vim.cmd(tostring(top))
+---@param offset integer
+function M.select_indent(offset)
+	move_cursor_to_first_indent()
+
+	local top_cmd = M.indent_cmd_top(offset)
+	local bot_cmd = M.indent_cmd_bot(offset)
+
+	vim.cmd(top_cmd)
 	vim.cmd("normal! _")
 	vim.cmd("normal! o")
-	vim.cmd(tostring(bot))
+	vim.cmd(bot_cmd)
 	vim.cmd("normal! g_")
 end
 
