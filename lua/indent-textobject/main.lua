@@ -52,9 +52,11 @@ end
 function M.indent_cmd_top(offset)
 	local top = find_indent(1, -1)
 	if not top then
-		top = "normal! gg"
+		---@diagnostic disable-next-line: cast-local-type
+		top = "keepjumps normal! 1G"
 	else
-		top = top + offset
+		---@diagnostic disable-next-line: cast-local-type
+		top = string.format("keepjumps normal! %dG", top + offset)
 	end
 	return tostring(top)
 end
@@ -64,9 +66,11 @@ end
 function M.indent_cmd_bot(offset)
 	local bot = find_indent(vim.api.nvim_buf_line_count(0), 1)
 	if not bot then
-		bot = "normal! G"
+		---@diagnostic disable-next-line: cast-local-type
+		bot = "keepjumps normal! G"
 	else
-		bot = bot - offset
+		---@diagnostic disable-next-line: cast-local-type
+		bot = string.format("keepjumps normal! %dG", bot - offset)
 	end
 	return tostring(bot)
 end
@@ -78,11 +82,17 @@ function M.select_indent(offset)
 	local top_cmd = M.indent_cmd_top(offset)
 	local bot_cmd = M.indent_cmd_bot(offset)
 
-	vim.cmd(top_cmd)
-	vim.cmd("normal! _")
-	vim.cmd("normal! o")
-	vim.cmd(bot_cmd)
-	vim.cmd("normal! g_")
+	vim.cmd(string.format(
+		[[
+			%s
+			normal! _
+			normal! o
+			%s
+			normal! g_
+		]],
+		top_cmd,
+		bot_cmd
+	))
 end
 
 return M

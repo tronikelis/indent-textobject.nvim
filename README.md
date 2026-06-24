@@ -19,17 +19,17 @@ This code example shows how to map:
 - `]I` move to last outer indent line
 
 ```lua
-vim.keymap.set("v", "ii", require("indent-textobject").select_inner)
-vim.keymap.set("v", "ai", require("indent-textobject").select_around)
+vim.keymap.set("v", "ii", "<plug>(IndentTextobjectSelectInner)")
+vim.keymap.set("v", "ai", "<plug>(IndentTextobjectSelectAround)")
 
 vim.keymap.set("o", "ii", "<cmd>normal vii<cr>")
 vim.keymap.set("o", "ai", "<cmd>normal vai<cr>")
 
-vim.keymap.set({ "n", "v" }, "[i", require("indent-textobject").goto_inner_top)
-vim.keymap.set({ "n", "v" }, "]i", require("indent-textobject").goto_inner_bot)
+vim.keymap.set({ "n", "v" }, "[i", "<plug>(IndentTextobjectGotoInnerTop)")
+vim.keymap.set({ "n", "v" }, "]i", "<plug>(IndentTextobjectGotoInnerBot)")
 
-vim.keymap.set({ "n", "v" }, "[I", require("indent-textobject").goto_around_top)
-vim.keymap.set({ "n", "v" }, "]I", require("indent-textobject").goto_around_bot)
+vim.keymap.set({ "n", "v" }, "[I", "<plug>(IndentTextobjectGotoAroundTop)")
+vim.keymap.set({ "n", "v" }, "]I", "<plug>(IndentTextobjectGotoAroundBot)")
 ```
 
 ## Api
